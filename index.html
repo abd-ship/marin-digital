@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marín Digital · Landing pages y asesoría de calistenia</title>
+<meta name="description" content="Landing pages, asesoría personalizada de calistenia y marketing digital.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --chalk: #EFEBE2;
+    --paper: #E4DED1;
+    --graphite: #141714;
+    --ink: #1F241F;
+    --moss: #3E5A46;
+    --signal: #E8B730;
+    --muted: #5B635B;
+    --radius: 4px;
+    --gutter: clamp(20px, 5vw, 56px);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --chalk: #141714;
+      --paper: #1B1F1B;
+      --graphite: #EFEBE2;
+      --ink: #E4DED1;
+      --moss: #8FB497;
+      --signal: #E8B730;
+      --muted: #A3ABA3;
+      color-scheme: dark;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--chalk);
+    color: var(--ink);
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  :focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
+  a { color: inherit; }
+  img, svg { max-width: 100%; display: block; }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* Header */
+  header.top {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+    background: var(--chalk);
+    border-bottom: 1px solid var(--paper);
+  }
+  header.top .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; gap: 16px;
+  }
+  .brand { font-weight: 800; font-stretch: 125%; text-decoration: none; letter-spacing: -0.01em; font-size: 1.05rem; }
+  .brand span { color: var(--moss); }
+  nav.links { display: flex; gap: 22px; font-size: 0.95rem; }
+  nav.links a { text-decoration: none; color: var(--muted); }
+  nav.links a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero { padding: clamp(56px, 12vh, 120px) 0 clamp(48px, 8vh, 88px); }
+  .hero h1 {
+    font-weight: 900;
+    font-stretch: 112%;
+    font-size: clamp(2.5rem, 7.2vw, 5.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    max-width: 13ch;
+  }
+  .hero h1 em { font-style: normal; color: var(--moss); }
+  .hero p.lead {
+    margin-top: 28px; max-width: 46ch; font-size: 1.2rem; color: var(--muted);
+  }
+  .hero .cta-row { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px;
+    border-radius: var(--radius); font: inherit; font-weight: 700; text-decoration: none;
+    border: 2px solid var(--graphite); cursor: pointer; background: transparent; color: var(--graphite);
+  }
+  .btn.solid { background: var(--graphite); color: var(--chalk); }
+  .btn:hover { background: var(--graphite); color: var(--chalk); }
+  .btn.solid:hover { background: var(--moss); border-color: var(--moss); }
+
+  /* Strip de lo que haces */
+  .strip {
+    background: var(--graphite); color: var(--chalk);
+    padding: 22px 0; overflow: hidden;
+  }
+  .strip p { font-weight: 700; font-stretch: 110%; font-size: clamp(1.1rem, 2.6vw, 1.5rem); letter-spacing: -0.01em; white-space: nowrap; }
+
+  section { padding: clamp(64px, 10vh, 112px) 0; }
+  .section-head { max-width: 640px; margin-bottom: 48px; }
+  .section-head h2 {
+    font-weight: 800; font-stretch: 112%;
+    font-size: clamp(1.9rem, 4.5vw, 2.9rem); line-height: 1.05; letter-spacing: -0.025em;
+  }
+  .section-head p { margin-top: 14px; color: var(--muted); }
+
+  /* Servicios: tres bloques con peso distinto */
+  .services { display: grid; grid-template-columns: 1.25fr 1fr; gap: 24px; }
+  .service {
+    border: 1px solid var(--graphite); border-radius: var(--radius); padding: 32px;
+    background: var(--chalk);
+  }
+  .service.featured { background: var(--graphite); color: var(--chalk); grid-row: span 2; }
+  .service.featured p, .service.featured li { color: #C9CFC6; }
+  .service h3 { font-weight: 800; font-stretch: 112%; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.15; }
+  .service > p { margin-top: 12px; color: var(--muted); }
+  .service ul { list-style: none; margin-top: 20px; }
+  .service li { padding: 10px 0; border-top: 1px solid rgba(127,127,127,.25); }
+  .service .price { margin-top: 24px; font-weight: 800; font-size: 1.1rem; }
+
+  .packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+  .pkg { border: 1px solid rgba(127,127,127,.35); border-radius: var(--radius); padding: 20px; }
+  .pkg strong { display: block; font-size: 1rem; }
+  .pkg .amt { font-weight: 900; font-stretch: 112%; font-size: 1.4rem; margin: 8px 0; }
+  .pkg small { color: var(--muted); font-size: .9rem; }
+  .service.featured .pkg small { color: #A9B1A8; }
+
+  /* Proceso */
+  .process { background: var(--paper); }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 2px solid var(--graphite); }
+  .step { padding: 24px 20px 0 0; }
+  .step b { display: block; font-stretch: 112%; font-size: 1.05rem; margin-bottom: 8px; }
+  .step p { color: var(--muted); font-size: .97rem; }
+
+  /* Recomendador */
+  .advisor {
+    border: 2px solid var(--graphite); border-radius: var(--radius);
+    padding: clamp(24px, 4vw, 40px); max-width: 720px;
+  }
+  .advisor fieldset { border: 0; }
+  .advisor legend { font-weight: 800; font-size: 1.2rem; margin-bottom: 16px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+  .opts label {
+    cursor: pointer; border: 1px solid var(--graphite); border-radius: var(--radius);
+    padding: 12px 16px; min-height: 48px; display: inline-flex; align-items: center;
+  }
+  .opts input { position: absolute; opacity: 0; pointer-events: none; }
+  .opts label:has(input:checked) { background: var(--graphite); color: var(--chalk); }
+  .opts label:has(input:focus-visible) { outline: 3px solid var(--signal); outline-offset: 3px; }
+  #result { margin-top: 8px; padding: 18px; background: var(--paper); border-radius: var(--radius); min-height: 1px; }
+  #result:empty { display: none; }
+
+  /* Contacto */
+  form.contact { display: grid; gap: 18px; max-width: 620px; }
+  .field { display: grid; gap: 6px; }
+  .field label { font-weight: 700; font-size: .95rem; }
+  .field input, .field select, .field textarea {
+    font: inherit; color: var(--ink); background: var(--chalk);
+    border: 1px solid var(--graphite); border-radius: var(--radius); padding: 12px 14px; min-height: 48px;
+  }
+  .field textarea { min-height: 120px; resize: vertical; }
+  .btn-submit { justify-self: start; }
+  .form-msg { color: var(--moss); font-weight: 700; min-height: 1.5em; }
+
+  footer { border-top: 1px solid var(--paper); padding: 32px 0; color: var(--muted); font-size: .92rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+  /* Una sola entrada orquestada en el hero */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero h1, .hero p.lead, .hero .cta-row { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+    .hero p.lead { animation-delay: .12s; }
+    .hero .cta-row { animation-delay: .24s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  }
+
+  /* Responsive */
+  @media (max-width: 860px) {
+    nav.links a:not(.keep) { display: none; }
+    .services { grid-template-columns: 1fr; }
+    .service.featured { grid-row: auto; }
+    .packages { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .step { padding: 24px 16px 16px 0; }
+  }
+  @media (max-width: 480px) {
+    .steps { grid-template-columns: 1fr; }
+    .hero .btn { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a href="#inicio" class="brand">Marín <span>Digital</span></a>
+    <nav class="links" aria-label="Principal">
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#asesor">Asesor</a>
+      <a href="#contacto" class="keep">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="hero">
+    <div class="wrap">
+      <h1>Tu web y tu cuerpo, <em>a tu medida.</em></h1>
+      <p class="lead">Creamos landing pages que convierten visitas en clientes y armamos planes de calistenia según tu nivel. Marketing digital para que te encuentren.</p>
+      <div class="cta-row">
+        <a href="#contacto" class="btn solid">Pedir diagnóstico gratis</a>
+        <a href="#servicios" class="btn">Ver servicios</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip" aria-hidden="true">
+    <div class="wrap"><p>Landing pages · Calistenia · Marketing digital · Landing pages · Calistenia · Marketing digital</p></div>
+  </div>
+
+  <section id="servicios">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Tres servicios, una sola forma de trabajar</h2>
+        <p>Cada proyecto empieza escuchándote. Los precios son de ejemplo y se ajustan a tu caso.</p>
+      </div>
+
+      <div class="services">
+        <article class="service featured">
+          <h3>Landing pages</h3>
+          <p>Una página clara que presenta tu negocio y lleva al visitante a escribirte.</p>
+          <div class="packages">
+            <div class="pkg">
+              <strong>Básica</strong>
+              <div class="amt">$1.800.000 COP</div>
+              <small>1 página, formulario y diseño responsive. Entrega en 5 días.</small>
+            </div>
+            <div class="pkg">
+              <strong>Estándar</strong>
+              <div class="amt">$3.500.000 COP</div>
+              <small>Hasta 4 secciones, catálogo y Google Maps. Entrega en 8 días.</small>
+            </div>
+            <div class="pkg">
+              <strong>Premium</strong>
+              <div class="amt">$6.500.000 COP</div>
+              <small>Sitio completo con panel admin y chatbot. Entrega en 15 días.</small>
+            </div>
+          </div>
+          <p class="price">Dominio y hosting incluidos el primer año. Precios en pesos colombianos, sin IVA.</p>
+        </article>
+
+        <article class="service">
+          <h3>Asesoría de calistenia</h3>
+          <p>Un plan hecho para tu nivel, tu tiempo y tus metas, con seguimiento real.</p>
+          <ul>
+            <li>Evaluación inicial de fuerza y movilidad</li>
+            <li>Plan personalizado por nivel: principiante, intermedio o avanzado</li>
+            <li>Ajustes cada 2 semanas según tu progreso</li>
+          </ul>
+          <p class="price">Desde $180.000 COP al mes</p>
+        </article>
+
+        <article class="service">
+          <h3>Marketing digital</h3>
+          <p>Hacemos que tu negocio aparezca donde buscan tus clientes.</p>
+          <ul>
+            <li>Diagnóstico de tus redes y tu sitio</li>
+            <li>Estrategia y calendario de contenido</li>
+            <li>Campañas básicas en redes</li>
+          </ul>
+          <p class="price">Desde $800.000 COP al mes</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="proceso" class="process">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Así trabajamos</h2>
+        <p>Cuatro pasos, sin sorpresas.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><b>Platicamos</b><p>Entendemos tu negocio o tus metas en una llamada corta.</p></div>
+        <div class="step"><b>Proponemos</b><p>Te enviamos un plan con alcance, precio y fechas.</p></div>
+        <div class="step"><b>Construimos</b><p>Te mostramos avances antes de terminar.</p></div>
+        <div class="step"><b>Entregamos</b><p>Publicamos o empezamos el plan y te acompañamos después.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="asesor">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>¿Qué te conviene?</h2>
+        <p>Responde dos preguntas y te sugerimos el servicio adecuado.</p>
+      </div>
+      <form class="advisor" id="advisor" aria-labelledby="adv-title">
+        <h3 id="adv-title" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Recomendador</h3>
+        <fieldset>
+          <legend>1. ¿Qué buscas?</legend>
+          <div class="opts">
+            <label><input type="radio" name="objetivo" value="calistenia" required> Entrenar</label>
+            <label><input type="radio" name="objetivo" value="web"> Una página web</label>
+            <label><input type="radio" name="objetivo" value="marketing"> Dar a conocer mi negocio</label>
+            <label><input type="radio" name="objetivo" value="todo"> Varias cosas</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>2. ¿Cuánto puedes invertir al mes, en COP?</legend>
+          <div class="opts">
+            <label><input type="radio" name="presupuesto" value="bajo" required> Menos de $500.000 COP</label>
+            <label><input type="radio" name="presupuesto" value="medio"> $500.000 a $1.000.000 COP</label>
+            <label><input type="radio" name="presupuesto" value="alto"> Más de $1.000.000 COP</label>
+          </div>
+        </fieldset>
+        <button type="submit" class="btn solid">Ver recomendación</button>
+        <div id="result" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Hablemos de tu proyecto</h2>
+        <p>Respondemos en menos de 24 horas.</p>
+      </div>
+      <form class="contact" id="contactForm">
+        <div class="field">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" name="nombre" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="correo">Correo</label>
+          <input id="correo" name="correo" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="servicio">Servicio de interés</label>
+          <select id="servicio" name="servicio" required>
+            <option value="">Elige una opción</option>
+            <option>Landing page</option>
+            <option>Asesoría de calistenia</option>
+            <option>Marketing digital</option>
+            <option>Varios</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mensaje">Cuéntanos tu caso</label>
+          <textarea id="mensaje" name="mensaje"></textarea>
+        </div>
+        <button type="submit" class="btn solid btn-submit">Enviar solicitud</button>
+        <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Marín Digital</span>
+    <span>Landing pages · Calistenia · Marketing digital</span>
+  </div>
+</footer>
+
+<script>
+  // Recomendador (reglas simples; la versión con IA llegará en otra semana)
+  const advisor = document.getElementById('advisor');
+  const result = document.getElementById('result');
+  const copy = {
+    calistenia: 'Te conviene la asesoría de calistenia. Empieza con la evaluación inicial y un plan para tu nivel.',
+    web: 'Lo tuyo es una landing page. El paquete Básico o Estándar cubre lo esencial para empezar.',
+    marketing: 'Tu siguiente paso es el marketing digital. Empezamos con un diagnóstico de tus redes y tu sitio.',
+    todo: 'Combinar servicios funciona bien. Te proponemos una landing page y asesoría de calistenia, con marketing después.'
+  };
+  advisor.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(advisor);
+    const objetivo = data.get('objetivo');
+    const presupuesto = data.get('presupuesto');
+    let texto = copy[objetivo];
+    if (presupuesto === 'bajo' && objetivo !== 'web') {
+      texto += ' Con este presupuesto, conviene empezar con un solo servicio.';
+    }
+    result.textContent = texto;
+  });
+
+  // Formulario de contacto (el envío real se conecta con Formspree o Firebase)
+  const contactForm = document.getElementById('contactForm');
+  const formMsg = document.getElementById('formMsg');
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    formMsg.textContent = 'Recibimos tu solicitud. Te escribimos pronto.';
+    contactForm.reset();
+  });
+</script>
+</body>
+</html>
