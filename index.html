@@ -133,6 +133,12 @@
   .opts input { position: absolute; opacity: 0; pointer-events: none; }
   .opts label:has(input:checked) { background: var(--graphite); color: var(--chalk); }
   .opts label:has(input:focus-visible) { outline: 3px solid var(--signal); outline-offset: 3px; }
+  .nota { font-size: .92rem; color: var(--muted); margin: -6px 0 14px; }
+  .opts-col { flex-direction: column; }
+  .opts label.detalle { flex-direction: column; align-items: flex-start; gap: 4px; width: 100%; padding: 14px 16px; }
+  .opts label.detalle strong { font-weight: 800; }
+  .opts label.detalle small { color: var(--muted); font-size: .92rem; line-height: 1.45; }
+  .opts label.detalle:has(input:checked) small { color: var(--chalk); opacity: .85; }
   #result { margin-top: 26px; padding: 22px; background: var(--paper); border-radius: var(--radius); }
   #result:empty { display: none; }
   #result h3 { font-stretch: 112%; font-size: 1.15rem; margin-bottom: 10px; }
@@ -196,8 +202,8 @@
         <span>Marketing digital para que te encuentren.</span>
       </p>
       <div class="cta-row">
-        <a href="#contacto" class="btn solid">Pedir diagnóstico gratis</a>
-        <a href="#servicios" class="btn">Ver servicios</a>
+        <a href="#servicios" class="btn solid">Ver servicios y precios</a>
+        <a href="#recomendacion" class="btn">Recibir una recomendación</a>
       </div>
     </div>
   </div>
@@ -293,19 +299,13 @@
           </div>
         </fieldset>
         <fieldset>
-          <legend>3. ¿Cuál es tu presupuesto aproximado?</legend>
-          <div class="opts">
-            <label><input type="radio" name="presupuesto" value="bajo" required> Menos de $1.000.000 COP</label>
-            <label><input type="radio" name="presupuesto" value="medio"> $1.000.000 a $4.000.000 COP</label>
-            <label><input type="radio" name="presupuesto" value="alto"> Más de $4.000.000 COP</label>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>4. ¿Cuándo lo necesitas?</legend>
-          <div class="opts">
-            <label><input type="radio" name="plazo" value="pronto" required> Lo antes posible</label>
-            <label><input type="radio" name="plazo" value="mes"> En 1 o 2 meses</label>
-            <label><input type="radio" name="plazo" value="sinprisa"> Sin prisa</label>
+          <legend>3. ¿Cuánto tienes para invertir?</legend>
+          <p class="nota">Las páginas web se pagan una sola vez. La calistenia y el marketing se pagan cada mes.</p>
+          <div class="opts opts-col">
+            <label class="detalle"><input type="radio" name="presupuesto" value="menos1" required><strong>Menos de $1.000.000 COP</strong><small>Alcanza para el plan Básico de marketing por un mes, o para calistenia por varios meses.</small></label>
+            <label class="detalle"><input type="radio" name="presupuesto" value="de1a2"><strong>$1.000.000 a $2.000.000 COP</strong><small>Alcanza para una página Básica, o para el plan Estándar de marketing por un mes.</small></label>
+            <label class="detalle"><input type="radio" name="presupuesto" value="de2a4"><strong>$2.000.000 a $4.000.000 COP</strong><small>Alcanza para una página Estándar, o para el plan Premium de marketing por un mes.</small></label>
+            <label class="detalle"><input type="radio" name="presupuesto" value="mas4"><strong>Más de $4.000.000 COP</strong><small>Permite una página Premium, o varios meses de marketing Premium.</small></label>
           </div>
         </fieldset>
         <button type="submit" class="btn solid">Ver recomendación</button>
@@ -374,9 +374,10 @@
 
   const textos = {
     web: {
-      bajo: 'Te recomendamos una página Básica desde $1.800.000 COP. Incluye 1 página, formulario y diseño responsive, y la recibes en aproximadamente 5 días.',
-      medio: 'Te recomendamos una página Estándar desde $3.500.000 COP. Incluye hasta 4 secciones, catálogo y Google Maps, y la recibes en aproximadamente 8 días.',
-      alto: 'Te recomendamos una página Premium desde $6.500.000 COP. Incluye un sitio completo con panel admin y chatbot, y la recibes en aproximadamente 15 días.'
+      menos1: 'La página Básica cuesta desde $1.800.000 COP, así que con este presupuesto te conviene empezar con calistenia o marketing y dejar la web para después.',
+      de1a2: 'Te recomendamos una página Básica desde $1.800.000 COP. Incluye 1 página, formulario y diseño responsive, y la recibes en aproximadamente 5 días.',
+      de2a4: 'Te recomendamos una página Estándar desde $3.500.000 COP. Incluye hasta 4 secciones, catálogo y Google Maps, y la recibes en aproximadamente 8 días.',
+      mas4: 'Te recomendamos una página Premium desde $6.500.000 COP. Incluye un sitio completo con panel admin y chatbot, y la recibes en aproximadamente 15 días.'
     },
     calistenia: {
       principiante: 'Te recomendamos el plan Principiante desde $180.000 COP al mes. Incluye evaluación inicial, plan de fuerza base y ajustes cada 2 semanas.',
@@ -384,9 +385,10 @@
       avanzado: 'Te recomendamos el plan Avanzado desde $350.000 COP al mes. Incluye habilidades avanzadas, ajustes frecuentes y revisión de técnica.'
     },
     marketing: {
-      bajo: 'Te recomendamos el plan Básico de marketing desde $800.000 COP al mes. Incluye diagnóstico de tus redes y tu sitio, y campañas básicas.',
-      medio: 'Te recomendamos el plan Estándar de marketing desde $1.500.000 COP al mes. Incluye estrategia de contenido, calendario mensual y campañas en redes.',
-      alto: 'Te recomendamos el plan Premium de marketing desde $2.500.000 COP al mes. Incluye estrategia completa en varias redes y medición mensual.'
+      menos1: 'Te recomendamos el plan Básico de marketing desde $800.000 COP al mes. Incluye diagnóstico de tus redes y tu sitio, y campañas básicas.',
+      de1a2: 'Te recomendamos el plan Estándar de marketing desde $1.500.000 COP al mes. Incluye estrategia de contenido, calendario mensual y campañas en redes.',
+      de2a4: 'Te recomendamos el plan Premium de marketing desde $2.500.000 COP al mes. Incluye estrategia completa en varias redes y medición mensual.',
+      mas4: 'Te recomendamos el plan Premium de marketing desde $2.500.000 COP al mes. Incluye estrategia completa en varias redes y medición mensual.'
     }
   };
 
@@ -403,7 +405,6 @@
     const servicios = data.getAll('servicio');
     const nivel = data.get('nivel');
     const presupuesto = data.get('presupuesto');
-    const plazo = data.get('plazo');
 
     result.innerHTML = '';
 
@@ -424,9 +425,6 @@
     if (servicios.includes('calistenia')) result.appendChild(crearParrafo(textos.calistenia[nivel]));
     if (servicios.includes('marketing')) result.appendChild(crearParrafo(textos.marketing[presupuesto]));
 
-    if (plazo === 'pronto') {
-      result.appendChild(crearParrafo('Como lo necesitas pronto, podemos empezar en cuanto cerremos la reunión inicial.'));
-    }
     if (servicios.length > 1) {
       result.appendChild(crearParrafo('Si quieres combinar servicios, revisamos juntos un paquete en la reunión inicial.', 'cierre'));
     }
