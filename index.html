@@ -240,23 +240,15 @@
         <article class="service">
           <h3>Calistenia y street workout</h3>
           <p>Un plan hecho para tu nivel, tu tiempo y tus metas, con seguimiento real.</p>
-          <ul>
-            <li>Evaluación inicial de fuerza y movilidad</li>
-            <li>Plan personalizado por nivel: principiante, intermedio o avanzado</li>
-            <li>Ajustes cada 2 semanas según tu progreso</li>
-          </ul>
-          <p class="price">Desde $180.000 COP al mes</p>
+          <div class="packages"><div class="pkg"><strong>Principiante</strong><div class="amt">$180.000 COP al mes</div><small>Evaluación inicial, plan de fuerza base y ajustes cada 2 semanas.</small></div><div class="pkg"><strong>Intermedio</strong><div class="amt">$260.000 COP al mes</div><small>Progresiones hacia nuevas habilidades y seguimiento semanal.</small></div><div class="pkg"><strong>Avanzado</strong><div class="amt">$350.000 COP al mes</div><small>Habilidades avanzadas, ajustes frecuentes y revisión de técnica.</small></div></div>
+          <p class="price">Evaluación inicial incluida en todos los planes.</p>
         </article>
 
         <article class="service">
           <h3>Marketing digital</h3>
           <p>Hacemos que tu negocio aparezca donde buscan tus clientes.</p>
-          <ul>
-            <li>Diagnóstico de tus redes y tu sitio</li>
-            <li>Estrategia y calendario de contenido</li>
-            <li>Campañas básicas en redes</li>
-          </ul>
-          <p class="price">Desde $800.000 COP al mes</p>
+          <div class="packages"><div class="pkg"><strong>Básico</strong><div class="amt">$800.000 COP al mes</div><small>Diagnóstico de tus redes y tu sitio, y campañas básicas.</small></div><div class="pkg"><strong>Estándar</strong><div class="amt">$1.500.000 COP al mes</div><small>Estrategia de contenido, calendario mensual y campañas en redes.</small></div><div class="pkg"><strong>Premium</strong><div class="amt">$2.500.000 COP al mes</div><small>Estrategia completa en varias redes y medición mensual.</small></div></div>
+          <p class="price">Precios de ejemplo en pesos colombianos.</p>
         </article>
       </div>
     </div>
@@ -292,7 +284,7 @@
             <label><input type="checkbox" name="servicio" value="marketing"> Marketing digital</label>
           </div>
         </fieldset>
-        <fieldset>
+        <fieldset id="nivelBloque" hidden>
           <legend>2. Si entrenas, ¿cuál es tu nivel?</legend>
           <div class="opts">
             <label><input type="radio" name="nivel" value="principiante"> Principiante</label>
@@ -369,21 +361,33 @@
   // Recomendación según servicios, nivel, presupuesto y plazo
   const advisor = document.getElementById('advisor');
   const result = document.getElementById('result');
+  const calCheck = advisor.querySelector('input[name="servicio"][value="calistenia"]');
+  const nivelBloque = document.getElementById('nivelBloque');
 
-  const paquetesWeb = {
-    bajo: 'Te recomendamos la página Básica: $1.800.000 COP, con 1 página, formulario y diseño responsive. Entrega en 5 días.',
-    medio: 'Te recomendamos la página Estándar: $3.500.000 COP, con hasta 4 secciones, catálogo y Google Maps. Entrega en 8 días.',
-    alto: 'Te recomendamos la página Premium: $6.500.000 COP, un sitio completo con panel admin y chatbot. Entrega en 15 días.'
-  };
-  const planesCalistenia = {
-    principiante: 'Para tu nivel empezamos con evaluación inicial y un plan de fuerza base, con ajustes cada 2 semanas. Desde $180.000 COP al mes.',
-    intermedio: 'Para tu nivel trabajamos progresiones hacia nuevas habilidades de calistenia y street workout, con seguimiento cada 2 semanas. Desde $180.000 COP al mes.',
-    avanzado: 'Para tu nivel armamos un plan de habilidades avanzadas y series de alta intensidad, con ajustes frecuentes. Desde $180.000 COP al mes.'
-  };
-  const planesMarketing = {
-    bajo: 'Empezamos con un diagnóstico de tus redes y tu sitio, más campañas básicas. Desde $800.000 COP al mes.',
-    medio: 'Te proponemos estrategia de contenido, calendario mensual y campañas en redes. Desde $800.000 COP al mes, con más alcance según tu inversión.',
-    alto: 'Te proponemos una estrategia completa: contenido, campañas en varias redes y medición mensual. Desde $800.000 COP al mes.'
+  // Muestra la pregunta de nivel solo si eligen calistenia
+  calCheck.addEventListener('change', () => {
+    nivelBloque.hidden = !calCheck.checked;
+    if (!calCheck.checked) {
+      advisor.querySelectorAll('input[name="nivel"]').forEach((r) => { r.checked = false; });
+    }
+  });
+
+  const textos = {
+    web: {
+      bajo: 'Página Básica: $1.800.000 COP, con 1 página, formulario y diseño responsive. Entrega en 5 días.',
+      medio: 'Página Estándar: $3.500.000 COP, con hasta 4 secciones, catálogo y Google Maps. Entrega en 8 días.',
+      alto: 'Página Premium: $6.500.000 COP, sitio completo con panel admin y chatbot. Entrega en 15 días.'
+    },
+    calistenia: {
+      principiante: 'Plan Principiante: $180.000 COP al mes, con evaluación inicial, plan de fuerza base y ajustes cada 2 semanas.',
+      intermedio: 'Plan Intermedio: $260.000 COP al mes, con progresiones hacia nuevas habilidades y seguimiento semanal.',
+      avanzado: 'Plan Avanzado: $350.000 COP al mes, con habilidades avanzadas, ajustes frecuentes y revisión de técnica.'
+    },
+    marketing: {
+      bajo: 'Marketing Básico: $800.000 COP al mes, con diagnóstico de tus redes y tu sitio, y campañas básicas.',
+      medio: 'Marketing Estándar: $1.500.000 COP al mes, con estrategia de contenido, calendario mensual y campañas en redes.',
+      alto: 'Marketing Premium: $2.500.000 COP al mes, con estrategia completa en varias redes y medición mensual.'
+    }
   };
 
   function crearParrafo(texto, clase) {
@@ -407,16 +411,18 @@
       result.appendChild(crearParrafo('Elige al menos un servicio para recomendarte una opción.'));
       return;
     }
+    if (servicios.includes('calistenia') && !nivel) {
+      result.appendChild(crearParrafo('Elige tu nivel para recomendarte el plan de calistenia.'));
+      return;
+    }
 
     const titulo = document.createElement('h3');
     titulo.textContent = servicios.length > 1 ? 'Tu combinación recomendada' : 'Tu recomendación';
     result.appendChild(titulo);
 
-    if (servicios.includes('web')) result.appendChild(crearParrafo(paquetesWeb[presupuesto]));
-    if (servicios.includes('calistenia')) {
-      result.appendChild(crearParrafo(planesCalistenia[nivel || 'principiante']));
-    }
-    if (servicios.includes('marketing')) result.appendChild(crearParrafo(planesMarketing[presupuesto]));
+    if (servicios.includes('web')) result.appendChild(crearParrafo(textos.web[presupuesto]));
+    if (servicios.includes('calistenia')) result.appendChild(crearParrafo(textos.calistenia[nivel]));
+    if (servicios.includes('marketing')) result.appendChild(crearParrafo(textos.marketing[presupuesto]));
 
     if (plazo === 'pronto') {
       result.appendChild(crearParrafo('Como lo necesitas pronto, podemos empezar en cuanto cerremos la reunión inicial.'));
