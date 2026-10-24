@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Marín Digital · Landing pages y asesoría de calistenia</title>
-<meta name="description" content="Landing pages, asesoría personalizada de calistenia y marketing digital.">
+<title>Marín Digital · Páginas web, calistenia y marketing</title>
+<meta name="description" content="Páginas web, asesoría de calistenia y street workout, y marketing digital.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&display=swap" rel="stylesheet">
@@ -17,6 +17,9 @@
     --moss: #3E5A46;
     --signal: #E8B730;
     --muted: #5B635B;
+    --black: #121512;
+    --black-ink: #EFEBE2;
+    --black-muted: #B5BDB3;
     --radius: 4px;
     --gutter: clamp(20px, 5vw, 56px);
     color-scheme: light;
@@ -28,7 +31,6 @@
       --graphite: #EFEBE2;
       --ink: #E4DED1;
       --moss: #8FB497;
-      --signal: #E8B730;
       --muted: #A3ABA3;
       color-scheme: dark;
     }
@@ -47,43 +49,33 @@
   }
   :focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
   a { color: inherit; }
-  img, svg { max-width: 100%; display: block; }
 
   .wrap { max-width: 1100px; margin: 0 auto; padding: 0 var(--gutter); }
 
-  /* Header */
   header.top {
     position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
     background: var(--chalk);
     border-bottom: 1px solid var(--paper);
   }
-  header.top .wrap {
-    display: flex; align-items: center; justify-content: space-between;
-    height: 64px; gap: 16px;
-  }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
   .brand { font-weight: 800; font-stretch: 125%; text-decoration: none; letter-spacing: -0.01em; font-size: 1.05rem; }
   .brand span { color: var(--moss); }
   nav.links { display: flex; gap: 22px; font-size: 0.95rem; }
   nav.links a { text-decoration: none; color: var(--muted); }
   nav.links a:hover { color: var(--ink); }
 
-  /* Hero */
   .hero { padding: clamp(56px, 12vh, 120px) 0 clamp(48px, 8vh, 88px); }
   .hero h1 {
-    font-weight: 900;
-    font-stretch: 112%;
+    font-weight: 900; font-stretch: 112%;
     font-size: clamp(2.5rem, 7.2vw, 5.4rem);
-    line-height: 0.98;
-    letter-spacing: -0.035em;
-    max-width: 13ch;
+    line-height: 0.98; letter-spacing: -0.035em; max-width: 13ch;
   }
   .hero h1 em { font-style: normal; color: var(--moss); }
-  .hero p.lead {
-    margin-top: 28px; max-width: 46ch; font-size: 1.2rem; color: var(--muted);
-  }
+  .hero .lead { margin-top: 28px; max-width: 46ch; font-size: 1.2rem; color: var(--muted); }
+  .hero .lead span { display: block; }
   .hero .cta-row { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 14px; }
   .btn {
-    display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px;
+    display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px;
     border-radius: var(--radius); font: inherit; font-weight: 700; text-decoration: none;
     border: 2px solid var(--graphite); cursor: pointer; background: transparent; color: var(--graphite);
   }
@@ -91,11 +83,7 @@
   .btn:hover { background: var(--graphite); color: var(--chalk); }
   .btn.solid:hover { background: var(--moss); border-color: var(--moss); }
 
-  /* Strip de lo que haces */
-  .strip {
-    background: var(--graphite); color: var(--chalk);
-    padding: 22px 0; overflow: hidden;
-  }
+  .strip { background: var(--black); color: var(--black-ink); padding: 22px 0; }
   .strip p { font-weight: 700; font-stretch: 110%; font-size: clamp(1.1rem, 2.6vw, 1.5rem); letter-spacing: -0.01em; }
 
   section { padding: clamp(64px, 10vh, 112px) 0; }
@@ -106,42 +94,38 @@
   }
   .section-head p { margin-top: 14px; color: var(--muted); }
 
-  /* Servicios: tres bloques con peso distinto */
-  .services { display: grid; grid-template-columns: 1.25fr 1fr; gap: 24px; }
+  /* Servicios: bloque negro, tres tarjetas con el mismo peso */
+  .dark { background: var(--black); color: var(--black-ink); }
+  .dark .section-head p { color: var(--black-muted); }
+  .services { display: grid; gap: 20px; }
   .service {
-    border: 1px solid var(--graphite); border-radius: var(--radius); padding: 32px;
-    background: var(--chalk);
+    border: 1px solid rgba(239, 235, 226, .22); border-radius: var(--radius); padding: 32px;
   }
-  .service.featured { background: var(--graphite); color: var(--chalk); }
-  .service.featured p, .service.featured li { color: #C9CFC6; }
   .service h3 { font-weight: 800; font-stretch: 112%; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.15; }
-  .service > p { margin-top: 12px; color: var(--muted); }
+  .service > p { margin-top: 12px; color: var(--black-muted); }
   .service ul { list-style: none; margin-top: 20px; }
-  .service li { padding: 10px 0; border-top: 1px solid rgba(127,127,127,.25); }
-  .service .price { margin-top: 24px; font-weight: 800; font-size: 1.1rem; }
+  .service li { padding: 10px 0; border-top: 1px solid rgba(239, 235, 226, .18); color: var(--black-muted); }
+  .service .price { margin-top: 24px; font-weight: 800; font-size: 1.1rem; color: var(--black-ink); }
 
   .packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
-  .pkg { border: 1px solid rgba(127,127,127,.35); border-radius: var(--radius); padding: 20px; }
+  .pkg { border: 1px solid rgba(239, 235, 226, .22); border-radius: var(--radius); padding: 20px; }
   .pkg strong { display: block; font-size: 1rem; }
-  .pkg .amt { font-weight: 900; font-stretch: 112%; font-size: 1.4rem; margin: 8px 0; }
-  .pkg small { color: var(--muted); font-size: .9rem; }
-  .service.featured .pkg small { color: #A9B1A8; }
+  .pkg .amt { font-weight: 900; font-stretch: 112%; font-size: 1.35rem; margin: 8px 0; }
+  .pkg small { color: var(--black-muted); font-size: .9rem; }
 
-  /* Proceso */
   .process { background: var(--paper); }
-  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 2px solid var(--graphite); }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--graphite); }
   .step { padding: 24px 20px 0 0; }
   .step b { display: block; font-stretch: 112%; font-size: 1.05rem; margin-bottom: 8px; }
   .step p { color: var(--muted); font-size: .97rem; }
 
-  /* Recomendador */
   .advisor {
     border: 2px solid var(--graphite); border-radius: var(--radius);
     padding: clamp(24px, 4vw, 40px); max-width: 720px;
   }
-  .advisor fieldset { border: 0; }
-  .advisor legend { font-weight: 800; font-size: 1.2rem; margin-bottom: 16px; }
-  .opts { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+  .advisor fieldset { border: 0; margin-bottom: 26px; }
+  .advisor legend { font-weight: 800; font-size: 1.1rem; margin-bottom: 14px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 10px; }
   .opts label {
     cursor: pointer; border: 1px solid var(--graphite); border-radius: var(--radius);
     padding: 12px 16px; min-height: 48px; display: inline-flex; align-items: center;
@@ -149,10 +133,12 @@
   .opts input { position: absolute; opacity: 0; pointer-events: none; }
   .opts label:has(input:checked) { background: var(--graphite); color: var(--chalk); }
   .opts label:has(input:focus-visible) { outline: 3px solid var(--signal); outline-offset: 3px; }
-  #result { margin-top: 8px; padding: 18px; background: var(--paper); border-radius: var(--radius); min-height: 1px; }
+  #result { margin-top: 26px; padding: 22px; background: var(--paper); border-radius: var(--radius); }
   #result:empty { display: none; }
+  #result h3 { font-stretch: 112%; font-size: 1.15rem; margin-bottom: 10px; }
+  #result p { margin-top: 10px; }
+  #result .cierre { color: var(--muted); }
 
-  /* Contacto */
   form.contact { display: grid; gap: 18px; max-width: 620px; }
   .field { display: grid; gap: 6px; }
   .field label { font-weight: 700; font-size: .95rem; }
@@ -167,26 +153,22 @@
   footer { border-top: 1px solid var(--paper); padding: 32px 0; color: var(--muted); font-size: .92rem; }
   footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 
-  /* Una sola entrada orquestada en el hero */
   @media (prefers-reduced-motion: no-preference) {
-    .hero h1, .hero p.lead, .hero .cta-row { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
-    .hero p.lead { animation-delay: .12s; }
+    .hero h1, .hero .lead, .hero .cta-row { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+    .hero .lead { animation-delay: .12s; }
     .hero .cta-row { animation-delay: .24s; }
     @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   }
 
-  /* Responsive */
   @media (max-width: 860px) {
     nav.links a:not(.keep) { display: none; }
-    .services { grid-template-columns: 1fr; }
-    .service.featured { grid-row: auto; }
     .packages { grid-template-columns: 1fr; }
     .steps { grid-template-columns: 1fr 1fr; }
     .step { padding: 24px 16px 16px 0; }
   }
   @media (max-width: 480px) {
     .steps { grid-template-columns: 1fr; }
-    .hero .btn { width: 100%; justify-content: center; }
+    .hero .btn { width: 100%; }
   }
 </style>
 </head>
@@ -198,7 +180,7 @@
     <nav class="links" aria-label="Principal">
       <a href="#servicios">Servicios</a>
       <a href="#proceso">Proceso</a>
-      <a href="#asesor">Asesor</a>
+      <a href="#recomendacion">Recomendación</a>
       <a href="#contacto" class="keep">Contacto</a>
     </nav>
   </div>
@@ -208,7 +190,11 @@
   <div class="hero">
     <div class="wrap">
       <h1>Tu web y tu cuerpo, <em>a tu medida.</em></h1>
-      <p class="lead">Creamos landing pages que convierten visitas en clientes y armamos planes de calistenia según tu nivel. Marketing digital para que te encuentren.</p>
+      <p class="lead">
+        <span>Creamos páginas web que convierten visitas en clientes.</span>
+        <span>Asesoría de calistenia y street workout según tu nivel.</span>
+        <span>Marketing digital para que te encuentren.</span>
+      </p>
       <div class="cta-row">
         <a href="#contacto" class="btn solid">Pedir diagnóstico gratis</a>
         <a href="#servicios" class="btn">Ver servicios</a>
@@ -220,7 +206,7 @@
     <div class="wrap"><p>Páginas web · Calistenia · Marketing</p></div>
   </div>
 
-  <section id="servicios">
+  <section id="servicios" class="dark">
     <div class="wrap">
       <div class="section-head">
         <h2>Tres servicios, una sola forma de trabajar</h2>
@@ -228,8 +214,8 @@
       </div>
 
       <div class="services">
-        <article class="service featured">
-          <h3>Landing pages</h3>
+        <article class="service">
+          <h3>Páginas web</h3>
           <p>Una página clara que presenta tu negocio y lleva al visitante a escribirte.</p>
           <div class="packages">
             <div class="pkg">
@@ -248,11 +234,11 @@
               <small>Sitio completo con panel admin y chatbot. Entrega en 15 días.</small>
             </div>
           </div>
-          <p class="price">Dominio y hosting incluidos el primer año. Precios en pesos colombianos, sin IVA.</p>
+          <p class="price">Dominio y hosting incluidos el primer año.</p>
         </article>
 
         <article class="service">
-          <h3>Asesoría de calistenia</h3>
+          <h3>Calistenia y street workout</h3>
           <p>Un plan hecho para tu nivel, tu tiempo y tus metas, con seguimiento real.</p>
           <ul>
             <li>Evaluación inicial de fuerza y movilidad</li>
@@ -279,41 +265,55 @@
   <section id="proceso" class="process">
     <div class="wrap">
       <div class="section-head">
-        <h2>Así trabajamos</h2>
-        <p>Cuatro pasos, sin sorpresas.</p>
+        <h2>Proceso de trabajo</h2>
+        <p>Cuatro etapas claras para avanzar con certeza en cada proyecto.</p>
       </div>
       <div class="steps">
-        <div class="step"><b>Platicamos</b><p>Entendemos tu negocio o tus metas en una llamada corta.</p></div>
-        <div class="step"><b>Proponemos</b><p>Te enviamos un plan con alcance, precio y fechas.</p></div>
-        <div class="step"><b>Construimos</b><p>Te mostramos avances antes de terminar.</p></div>
-        <div class="step"><b>Entregamos</b><p>Publicamos o empezamos el plan y te acompañamos después.</p></div>
+        <div class="step"><b>Reunión inicial</b><p>Nos reunimos para entendernos: tus metas, tu negocio o tu nivel, y lo que necesitas.</p></div>
+        <div class="step"><b>Propuesta</b><p>Te enviamos un plan con alcance, precio y fechas.</p></div>
+        <div class="step"><b>Desarrollo</b><p>Te mostramos avances antes de terminar.</p></div>
+        <div class="step"><b>Entrega y seguimiento</b><p>Publicamos o iniciamos tu plan, y te acompañamos después.</p></div>
       </div>
     </div>
   </section>
 
-  <section id="asesor">
+  <section id="recomendacion">
     <div class="wrap">
       <div class="section-head">
-        <h2>¿Qué te conviene?</h2>
-        <p>Responde dos preguntas y te sugerimos el servicio adecuado.</p>
+        <h2>Recomendación personalizada</h2>
+        <p>Cuéntanos qué necesitas y te sugerimos el servicio y el plan adecuados.</p>
       </div>
-      <form class="advisor" id="advisor" aria-labelledby="adv-title">
-        <h3 id="adv-title" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Recomendador</h3>
+      <form class="advisor" id="advisor">
         <fieldset>
-          <legend>1. ¿Qué buscas?</legend>
+          <legend>1. ¿Qué necesitas? Puedes elegir varios</legend>
           <div class="opts">
-            <label><input type="radio" name="objetivo" value="calistenia" required> Entrenar</label>
-            <label><input type="radio" name="objetivo" value="web"> Una página web</label>
-            <label><input type="radio" name="objetivo" value="marketing"> Dar a conocer mi negocio</label>
-            <label><input type="radio" name="objetivo" value="todo"> Varias cosas</label>
+            <label><input type="checkbox" name="servicio" value="web"> Páginas web</label>
+            <label><input type="checkbox" name="servicio" value="calistenia"> Calistenia y street workout</label>
+            <label><input type="checkbox" name="servicio" value="marketing"> Marketing digital</label>
           </div>
         </fieldset>
         <fieldset>
-          <legend>2. ¿Cuánto puedes invertir al mes, en COP?</legend>
+          <legend>2. Si entrenas, ¿cuál es tu nivel?</legend>
           <div class="opts">
-            <label><input type="radio" name="presupuesto" value="bajo" required> Menos de $500.000 COP</label>
-            <label><input type="radio" name="presupuesto" value="medio"> $500.000 a $1.000.000 COP</label>
-            <label><input type="radio" name="presupuesto" value="alto"> Más de $1.000.000 COP</label>
+            <label><input type="radio" name="nivel" value="principiante"> Principiante</label>
+            <label><input type="radio" name="nivel" value="intermedio"> Intermedio</label>
+            <label><input type="radio" name="nivel" value="avanzado"> Avanzado</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>3. ¿Cuál es tu presupuesto aproximado?</legend>
+          <div class="opts">
+            <label><input type="radio" name="presupuesto" value="bajo" required> Menos de $1.000.000 COP</label>
+            <label><input type="radio" name="presupuesto" value="medio"> $1.000.000 a $4.000.000 COP</label>
+            <label><input type="radio" name="presupuesto" value="alto"> Más de $4.000.000 COP</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>4. ¿Cuándo lo necesitas?</legend>
+          <div class="opts">
+            <label><input type="radio" name="plazo" value="pronto" required> Lo antes posible</label>
+            <label><input type="radio" name="plazo" value="mes"> En 1 o 2 meses</label>
+            <label><input type="radio" name="plazo" value="sinprisa"> Sin prisa</label>
           </div>
         </fieldset>
         <button type="submit" class="btn solid">Ver recomendación</button>
@@ -341,8 +341,8 @@
           <label for="servicio">Servicio de interés</label>
           <select id="servicio" name="servicio" required>
             <option value="">Elige una opción</option>
-            <option>Landing page</option>
-            <option>Asesoría de calistenia</option>
+            <option>Páginas web</option>
+            <option>Calistenia y street workout</option>
             <option>Marketing digital</option>
             <option>Varios</option>
           </select>
@@ -360,34 +360,73 @@
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Marín Digital</span>
-    <span>Landing pages · Calistenia · Marketing digital</span>
+    <span>© 2026 Carlos Marín</span>
+    <span>Páginas web · Calistenia · Marketing digital</span>
   </div>
 </footer>
 
 <script>
-  // Recomendador (reglas simples; la versión con IA llegará en otra semana)
+  // Recomendación según servicios, nivel, presupuesto y plazo
   const advisor = document.getElementById('advisor');
   const result = document.getElementById('result');
-  const copy = {
-    calistenia: 'Te conviene la asesoría de calistenia. Empieza con la evaluación inicial y un plan para tu nivel.',
-    web: 'Lo tuyo es una landing page. El paquete Básico o Estándar cubre lo esencial para empezar.',
-    marketing: 'Tu siguiente paso es el marketing digital. Empezamos con un diagnóstico de tus redes y tu sitio.',
-    todo: 'Combinar servicios funciona bien. Te proponemos una landing page y asesoría de calistenia, con marketing después.'
+
+  const paquetesWeb = {
+    bajo: 'Te recomendamos la página Básica: $1.800.000 COP, con 1 página, formulario y diseño responsive. Entrega en 5 días.',
+    medio: 'Te recomendamos la página Estándar: $3.500.000 COP, con hasta 4 secciones, catálogo y Google Maps. Entrega en 8 días.',
+    alto: 'Te recomendamos la página Premium: $6.500.000 COP, un sitio completo con panel admin y chatbot. Entrega en 15 días.'
   };
+  const planesCalistenia = {
+    principiante: 'Para tu nivel empezamos con evaluación inicial y un plan de fuerza base, con ajustes cada 2 semanas. Desde $180.000 COP al mes.',
+    intermedio: 'Para tu nivel trabajamos progresiones hacia nuevas habilidades de calistenia y street workout, con seguimiento cada 2 semanas. Desde $180.000 COP al mes.',
+    avanzado: 'Para tu nivel armamos un plan de habilidades avanzadas y series de alta intensidad, con ajustes frecuentes. Desde $180.000 COP al mes.'
+  };
+  const planesMarketing = {
+    bajo: 'Empezamos con un diagnóstico de tus redes y tu sitio, más campañas básicas. Desde $800.000 COP al mes.',
+    medio: 'Te proponemos estrategia de contenido, calendario mensual y campañas en redes. Desde $800.000 COP al mes, con más alcance según tu inversión.',
+    alto: 'Te proponemos una estrategia completa: contenido, campañas en varias redes y medición mensual. Desde $800.000 COP al mes.'
+  };
+
+  function crearParrafo(texto, clase) {
+    const p = document.createElement('p');
+    if (clase) p.className = clase;
+    p.textContent = texto;
+    return p;
+  }
+
   advisor.addEventListener('submit', (e) => {
     e.preventDefault();
     const data = new FormData(advisor);
-    const objetivo = data.get('objetivo');
+    const servicios = data.getAll('servicio');
+    const nivel = data.get('nivel');
     const presupuesto = data.get('presupuesto');
-    let texto = copy[objetivo];
-    if (presupuesto === 'bajo' && objetivo !== 'web') {
-      texto += ' Con este presupuesto, conviene empezar con un solo servicio.';
+    const plazo = data.get('plazo');
+
+    result.innerHTML = '';
+
+    if (servicios.length === 0) {
+      result.appendChild(crearParrafo('Elige al menos un servicio para recomendarte una opción.'));
+      return;
     }
-    result.textContent = texto;
+
+    const titulo = document.createElement('h3');
+    titulo.textContent = servicios.length > 1 ? 'Tu combinación recomendada' : 'Tu recomendación';
+    result.appendChild(titulo);
+
+    if (servicios.includes('web')) result.appendChild(crearParrafo(paquetesWeb[presupuesto]));
+    if (servicios.includes('calistenia')) {
+      result.appendChild(crearParrafo(planesCalistenia[nivel || 'principiante']));
+    }
+    if (servicios.includes('marketing')) result.appendChild(crearParrafo(planesMarketing[presupuesto]));
+
+    if (plazo === 'pronto') {
+      result.appendChild(crearParrafo('Como lo necesitas pronto, podemos empezar en cuanto cerremos la reunión inicial.'));
+    }
+    if (servicios.length > 1) {
+      result.appendChild(crearParrafo('Si quieres combinar servicios, revisamos juntos un paquete en la reunión inicial.', 'cierre'));
+    }
   });
 
-  // Formulario de contacto (el envío real se conecta con Formspree o Firebase)
+  // Formulario de contacto (el envío real se conecta con Formspree o Mongo)
   const contactForm = document.getElementById('contactForm');
   const formMsg = document.getElementById('formMsg');
   contactForm.addEventListener('submit', (e) => {
