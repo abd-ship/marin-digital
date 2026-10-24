@@ -374,19 +374,19 @@
 
   const textos = {
     web: {
-      bajo: 'Página Básica: $1.800.000 COP, con 1 página, formulario y diseño responsive. Entrega en 5 días.',
-      medio: 'Página Estándar: $3.500.000 COP, con hasta 4 secciones, catálogo y Google Maps. Entrega en 8 días.',
-      alto: 'Página Premium: $6.500.000 COP, sitio completo con panel admin y chatbot. Entrega en 15 días.'
+      bajo: 'Te recomendamos una página Básica desde $1.800.000 COP. Incluye 1 página, formulario y diseño responsive, y la recibes en aproximadamente 5 días.',
+      medio: 'Te recomendamos una página Estándar desde $3.500.000 COP. Incluye hasta 4 secciones, catálogo y Google Maps, y la recibes en aproximadamente 8 días.',
+      alto: 'Te recomendamos una página Premium desde $6.500.000 COP. Incluye un sitio completo con panel admin y chatbot, y la recibes en aproximadamente 15 días.'
     },
     calistenia: {
-      principiante: 'Plan Principiante: $180.000 COP al mes, con evaluación inicial, plan de fuerza base y ajustes cada 2 semanas.',
-      intermedio: 'Plan Intermedio: $260.000 COP al mes, con progresiones hacia nuevas habilidades y seguimiento semanal.',
-      avanzado: 'Plan Avanzado: $350.000 COP al mes, con habilidades avanzadas, ajustes frecuentes y revisión de técnica.'
+      principiante: 'Te recomendamos el plan Principiante desde $180.000 COP al mes. Incluye evaluación inicial, plan de fuerza base y ajustes cada 2 semanas.',
+      intermedio: 'Te recomendamos el plan Intermedio desde $260.000 COP al mes. Incluye progresiones hacia nuevas habilidades y seguimiento semanal.',
+      avanzado: 'Te recomendamos el plan Avanzado desde $350.000 COP al mes. Incluye habilidades avanzadas, ajustes frecuentes y revisión de técnica.'
     },
     marketing: {
-      bajo: 'Marketing Básico: $800.000 COP al mes, con diagnóstico de tus redes y tu sitio, y campañas básicas.',
-      medio: 'Marketing Estándar: $1.500.000 COP al mes, con estrategia de contenido, calendario mensual y campañas en redes.',
-      alto: 'Marketing Premium: $2.500.000 COP al mes, con estrategia completa en varias redes y medición mensual.'
+      bajo: 'Te recomendamos el plan Básico de marketing desde $800.000 COP al mes. Incluye diagnóstico de tus redes y tu sitio, y campañas básicas.',
+      medio: 'Te recomendamos el plan Estándar de marketing desde $1.500.000 COP al mes. Incluye estrategia de contenido, calendario mensual y campañas en redes.',
+      alto: 'Te recomendamos el plan Premium de marketing desde $2.500.000 COP al mes. Incluye estrategia completa en varias redes y medición mensual.'
     }
   };
 
@@ -417,7 +417,7 @@
     }
 
     const titulo = document.createElement('h3');
-    titulo.textContent = servicios.length > 1 ? 'Tu combinación recomendada' : 'Tu recomendación';
+    titulo.textContent = servicios.length > 1 ? 'Te recomendamos esta combinación' : 'Te recomendamos';
     result.appendChild(titulo);
 
     if (servicios.includes('web')) result.appendChild(crearParrafo(textos.web[presupuesto]));
