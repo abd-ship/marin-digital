@@ -271,3 +271,5 @@ h1, h2, h3, .brand, .pkg .amt, .step b, .advisor legend, #result h3 {
 a.icono { text-decoration: none; transition: transform .2s, background .2s, border-color .2s; }
 a.icono:hover { transform: translateY(-3px); background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.35); }
 section[id], article[id] { scroll-margin-top: 90px; }
+
+.advisor .sub { font-weight: 700; margin: 6px 0 10px; color: var(--verde-oscuro); }

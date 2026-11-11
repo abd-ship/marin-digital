@@ -145,29 +145,43 @@
       </div>
       <form class="advisor" id="advisor">
         <fieldset>
-          <legend>1. ¿Qué necesitas? Puedes elegir varios</legend>
+          <legend>¿Qué necesitas? Puedes elegir varios</legend>
           <div class="opts">
             <label><input type="checkbox" name="servicio" value="web"> Páginas web</label>
             <label><input type="checkbox" name="servicio" value="calistenia"> Calistenia y street workout</label>
             <label><input type="checkbox" name="servicio" value="marketing"> Marketing digital</label>
           </div>
         </fieldset>
-        <fieldset id="nivelBloque" hidden>
-          <legend>2. Si entrenas, ¿cuál es tu nivel?</legend>
+        <fieldset>
+          <legend>¿Cuál es tu mayor reto hoy?</legend>
+          <div class="opts opts-col">
+            <label class="detalle"><input type="radio" name="reto" value="nadie" required><strong>Nadie me encuentra en internet</strong></label>
+            <label class="detalle"><input type="radio" name="reto" value="cierran"><strong>Me escriben, pero no logro cerrar ventas</strong></label>
+            <label class="detalle"><input type="radio" name="reto" value="sin"><strong>No tengo presencia digital todavía</strong></label>
+            <label class="detalle"><input type="radio" name="reto" value="entrenar"><strong>Quiero entrenar, pero no sé por dónde empezar</strong></label>
+          </div>
+        </fieldset>
+        <fieldset id="calBloque" hidden>
+          <legend>Si entrenas, cuéntanos más</legend>
+          <p class="sub">Tu nivel</p>
           <div class="opts">
             <label><input type="radio" name="nivel" value="principiante"> Principiante</label>
             <label><input type="radio" name="nivel" value="intermedio"> Intermedio</label>
             <label><input type="radio" name="nivel" value="avanzado"> Avanzado</label>
           </div>
+          <p class="sub">¿Cuántos días a la semana puedes entrenar?</p>
+          <div class="opts">
+            <label><input type="radio" name="dias" value="pocos"> 1 a 2 días</label>
+            <label><input type="radio" name="dias" value="tres"> 3 días</label>
+            <label><input type="radio" name="dias" value="muchos"> 4 o más</label>
+          </div>
         </fieldset>
         <fieldset>
-          <legend>3. ¿Cuánto tienes para invertir?</legend>
-          <p class="nota">Las páginas web se pagan una sola vez. La calistenia y el marketing se pagan cada mes.</p>
-          <div class="opts opts-col">
-            <label class="detalle"><input type="radio" name="presupuesto" value="menos1" required><strong>Menos de $1.000.000 COP</strong><small>Alcanza para el plan Básico de marketing por un mes, o para calistenia por varios meses.</small></label>
-            <label class="detalle"><input type="radio" name="presupuesto" value="de1a2"><strong>$1.000.000 a $2.000.000 COP</strong><small>Alcanza para una página Básica, o para el plan Estándar de marketing por un mes.</small></label>
-            <label class="detalle"><input type="radio" name="presupuesto" value="de2a4"><strong>$2.000.000 a $4.000.000 COP</strong><small>Alcanza para una página Estándar, o para el plan Premium de marketing por un mes.</small></label>
-            <label class="detalle"><input type="radio" name="presupuesto" value="mas4"><strong>Más de $4.000.000 COP</strong><small>Permite una página Premium, o varios meses de marketing Premium.</small></label>
+          <legend>¿Cómo prefieres que te contactemos?</legend>
+          <div class="opts">
+            <label><input type="radio" name="canal" value="whatsapp" required> WhatsApp</label>
+            <label><input type="radio" name="canal" value="correo"> Correo</label>
+            <label><input type="radio" name="canal" value="llamada"> Llamada</label>
           </div>
         </fieldset>
         <button type="submit" class="btn solid">Ver recomendación</button>
@@ -224,39 +238,44 @@
 </footer>
 
 <script>
-  // Recomendación según servicios, nivel, presupuesto y plazo
+  // Recomendación según servicios, reto, nivel, días y canal de contacto
   const advisor = document.getElementById('advisor');
   const result = document.getElementById('result');
+  const calBloque = document.getElementById('calBloque');
+  const checks = advisor.querySelectorAll('input[name="servicio"]');
   const calCheck = advisor.querySelector('input[name="servicio"][value="calistenia"]');
-  const nivelBloque = document.getElementById('nivelBloque');
 
-  // Muestra la pregunta de nivel solo si eligen calistenia
+  // Muestra las preguntas de calistenia solo si la persona las elige
   calCheck.addEventListener('change', () => {
-    nivelBloque.hidden = !calCheck.checked;
+    calBloque.hidden = !calCheck.checked;
     if (!calCheck.checked) {
-      advisor.querySelectorAll('input[name="nivel"]').forEach((r) => { r.checked = false; });
+      advisor.querySelectorAll('input[name="nivel"], input[name="dias"]').forEach((r) => { r.checked = false; });
     }
   });
 
   const textos = {
     web: {
-      menos1: 'La página Básica cuesta desde $1.200.000 COP, así que con este presupuesto te conviene empezar con calistenia o marketing y dejar la web para después.',
-      de1a2: 'Te recomendamos una página Básica desde $1.200.000 COP. Incluye 1 página, formulario y diseño responsive, y la recibes en aproximadamente 5 días.',
-      de2a4: 'Te recomendamos una página Estándar desde $2.200.000 COP. Incluye hasta 4 secciones, catálogo y Google Maps, y la recibes en aproximadamente 8 días.',
-      mas4: 'Te recomendamos una página Premium desde $3.800.000 COP. Incluye un sitio completo con panel admin y chatbot, y la recibes en aproximadamente 15 días.'
+      nadie: 'Te recomendamos una página Estándar desde $2.200.000 COP. Incluye hasta 4 secciones, catálogo y Google Maps, y la recibes en aproximadamente 8 días.',
+      cierran: 'Te recomendamos una página Estándar desde $2.200.000 COP. Incluye hasta 4 secciones, catálogo y Google Maps, y la recibes en aproximadamente 8 días.',
+      sin: 'Te recomendamos una página Básica desde $1.200.000 COP. Incluye 1 página, formulario y diseño responsive, y la recibes en aproximadamente 5 días.'
     },
     calistenia: {
       principiante: 'Te recomendamos el plan Principiante desde $180.000 COP al mes. Incluye evaluación inicial, plan de fuerza base y ajustes cada 2 semanas.',
       intermedio: 'Te recomendamos el plan Intermedio desde $260.000 COP al mes. Incluye progresiones hacia nuevas habilidades y seguimiento semanal.',
       avanzado: 'Te recomendamos el plan Avanzado desde $350.000 COP al mes. Incluye habilidades avanzadas, ajustes frecuentes y revisión de técnica.'
     },
+    dias: {
+      pocos: 'Con 1 a 2 días a la semana armamos un plan corto y eficiente.',
+      tres: 'Con 3 días a la semana, el plan tiene la carga ideal para avanzar sin sobrecargarte.',
+      muchos: 'Con 4 o más días a la semana, el plan incluye más volumen y días de descanso activo.'
+    },
     marketing: {
-      menos1: 'Te recomendamos el plan Básico de marketing desde $450.000 COP al mes. Incluye diagnóstico de tus redes y tu sitio, y campañas básicas.',
-      de1a2: 'Te recomendamos el plan Estándar de marketing desde $900.000 COP al mes. Incluye estrategia de contenido, calendario mensual y campañas en redes.',
-      de2a4: 'Te recomendamos el plan Premium de marketing desde $1.500.000 COP al mes. Incluye estrategia completa en varias redes y medición mensual.',
-      mas4: 'Te recomendamos el plan Premium de marketing desde $1.500.000 COP al mes. Incluye estrategia completa en varias redes y medición mensual.'
+      nadie: 'Te recomendamos el plan Estándar de marketing desde $900.000 COP al mes. Incluye estrategia de contenido, calendario mensual y campañas para que te encuentren.',
+      cierran: 'Te recomendamos el plan Premium de marketing desde $1.500.000 COP al mes. Incluye estrategia completa para convertir mensajes en clientes, y medición mensual.',
+      sin: 'Te recomendamos el plan Básico de marketing desde $450.000 COP al mes. Incluye diagnóstico de tus redes y tu sitio, y campañas básicas para empezar.'
     }
   };
+  const canales = { whatsapp: 'WhatsApp', correo: 'correo', llamada: 'llamada' };
 
   function crearParrafo(texto, clase) {
     const p = document.createElement('p');
@@ -269,8 +288,10 @@
     e.preventDefault();
     const data = new FormData(advisor);
     const servicios = data.getAll('servicio');
+    const reto = data.get('reto');
     const nivel = data.get('nivel');
-    const presupuesto = data.get('presupuesto');
+    const dias = data.get('dias');
+    const canal = data.get('canal');
 
     result.innerHTML = '';
 
@@ -278,8 +299,8 @@
       result.appendChild(crearParrafo('Elige al menos un servicio para recomendarte una opción.'));
       return;
     }
-    if (servicios.includes('calistenia') && !nivel) {
-      result.appendChild(crearParrafo('Elige tu nivel para recomendarte el plan de calistenia.'));
+    if (servicios.includes('calistenia') && (!nivel || !dias)) {
+      result.appendChild(crearParrafo('Cuéntanos tu nivel y cuántos días puedes entrenar para recomendarte el plan de calistenia.'));
       return;
     }
 
@@ -287,13 +308,17 @@
     titulo.textContent = servicios.length > 1 ? 'Te recomendamos esta combinación' : 'Te recomendamos';
     result.appendChild(titulo);
 
-    if (servicios.includes('web')) result.appendChild(crearParrafo(textos.web[presupuesto]));
-    if (servicios.includes('calistenia')) result.appendChild(crearParrafo(textos.calistenia[nivel]));
-    if (servicios.includes('marketing')) result.appendChild(crearParrafo(textos.marketing[presupuesto]));
+    if (servicios.includes('web')) result.appendChild(crearParrafo(textos.web[reto] || textos.web.sin));
+    if (servicios.includes('calistenia')) {
+      result.appendChild(crearParrafo(textos.calistenia[nivel]));
+      result.appendChild(crearParrafo(textos.dias[dias]));
+    }
+    if (servicios.includes('marketing')) result.appendChild(crearParrafo(textos.marketing[reto] || textos.marketing.sin));
 
     if (servicios.length > 1) {
       result.appendChild(crearParrafo('Si quieres combinar servicios, revisamos juntos un paquete en la reunión inicial.', 'cierre'));
     }
+    result.appendChild(crearParrafo('Prefieres que te contactemos por ' + canales[canal] + '. Déjanos tus datos en el formulario de contacto.', 'cierre'));
   });
 
   // Formulario de contacto: envío real con Formspree
