@@ -273,3 +273,5 @@ a.icono:hover { transform: translateY(-3px); background: rgba(255,255,255,.12); 
 section[id], article[id] { scroll-margin-top: 90px; }
 
 .advisor .sub { font-weight: 700; margin: 6px 0 10px; color: var(--verde-oscuro); }
+
+.combo { font-weight: 700; color: var(--verde-oscuro); }

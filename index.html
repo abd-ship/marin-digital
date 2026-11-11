@@ -276,6 +276,17 @@
     }
   };
   const canales = { whatsapp: 'WhatsApp', correo: 'correo', llamada: 'llamada' };
+  const nombreWeb = { nadie: 'una página Estándar', cierran: 'una página Estándar', sin: 'una página Básica' };
+  const nombreCalistenia = {
+    principiante: 'el plan Principiante de calistenia',
+    intermedio: 'el plan Intermedio de calistenia',
+    avanzado: 'el plan Avanzado de calistenia'
+  };
+  const nombreMarketing = {
+    nadie: 'el plan Estándar de marketing',
+    cierran: 'el plan Premium de marketing',
+    sin: 'el plan Básico de marketing'
+  };
 
   function crearParrafo(texto, clase) {
     const p = document.createElement('p');
@@ -316,7 +327,14 @@
     if (servicios.includes('marketing')) result.appendChild(crearParrafo(textos.marketing[reto] || textos.marketing.sin));
 
     if (servicios.length > 1) {
-      result.appendChild(crearParrafo('Si quieres combinar servicios, revisamos juntos un paquete en la reunión inicial.', 'cierre'));
+      const nombres = [];
+      if (servicios.includes('web')) nombres.push(nombreWeb[reto] || nombreWeb.sin);
+      if (servicios.includes('calistenia')) nombres.push(nombreCalistenia[nivel]);
+      if (servicios.includes('marketing')) nombres.push(nombreMarketing[reto] || nombreMarketing.sin);
+      const lista = nombres.length === 2
+        ? nombres[0] + ' y también ' + nombres[1]
+        : nombres.slice(0, -1).join(', ') + ' y también ' + nombres[nombres.length - 1];
+      result.appendChild(crearParrafo('Te recomendamos ' + lista + '. Al contratarlos como un solo paquete, recibes un descuento especial del 10%.', 'combo'));
     }
     result.appendChild(crearParrafo('Prefieres que te contactemos por ' + canales[canal] + '. Déjanos tus datos en el formulario de contacto.', 'cierre'));
   });
