@@ -339,8 +339,8 @@
     result.appendChild(crearParrafo('Prefieres que te contactemos por ' + canales[canal] + '. Déjanos tus datos en el formulario de contacto.', 'cierre'));
   });
 
-  // Formulario de contacto: envío real con Formspree
-  const FORMSPREE_URL = 'https://formspree.io/f/xaeerood';
+  // Formulario de contacto: envía las solicitudes al backend, que las guarda en MongoDB
+  const API_URL = 'http://localhost:3000/api/solicitudes';
 
   const contactForm = document.getElementById('contactForm');
   const formMsg = document.getElementById('formMsg');
@@ -352,11 +352,13 @@
     botonEnviar.textContent = 'Enviando...';
     formMsg.textContent = '';
 
+    const datos = Object.fromEntries(new FormData(contactForm).entries());
+
     try {
-      const respuesta = await fetch(FORMSPREE_URL, {
+      const respuesta = await fetch(API_URL, {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(contactForm)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos)
       });
       if (respuesta.ok) {
         formMsg.textContent = 'Recibimos tu solicitud. Te escribimos pronto.';
@@ -365,7 +367,7 @@
         formMsg.textContent = 'No pudimos enviar tu solicitud. Intenta de nuevo en un momento.';
       }
     } catch (error) {
-      formMsg.textContent = 'Revisa tu conexión e intenta de nuevo.';
+      formMsg.textContent = 'No pudimos conectar con el servidor. Intenta de nuevo más tarde.';
     } finally {
       botonEnviar.disabled = false;
       botonEnviar.textContent = 'Enviar solicitud';
