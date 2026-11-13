@@ -238,14 +238,13 @@
 </footer>
 
 <script>
-  // Recomendación según servicios, reto, nivel, días y canal de contacto
+  // Recomendación: primero intenta con la IA; si no responde, usa las reglas de siempre
   const advisor = document.getElementById('advisor');
   const result = document.getElementById('result');
   const calBloque = document.getElementById('calBloque');
-  const checks = advisor.querySelectorAll('input[name="servicio"]');
   const calCheck = advisor.querySelector('input[name="servicio"][value="calistenia"]');
+  const API_RECO = 'https://marin-backend.onrender.com/api/recomendacion';
 
-  // Muestra las preguntas de calistenia solo si la persona las elige
   calCheck.addEventListener('change', () => {
     calBloque.hidden = !calCheck.checked;
     if (!calCheck.checked) {
@@ -257,7 +256,8 @@
     web: {
       nadie: 'Te recomendamos una página Estándar desde $2.200.000 COP. Incluye hasta 4 secciones, catálogo y Google Maps, y la recibes en aproximadamente 8 días.',
       cierran: 'Te recomendamos una página Estándar desde $2.200.000 COP. Incluye hasta 4 secciones, catálogo y Google Maps, y la recibes en aproximadamente 8 días.',
-      sin: 'Te recomendamos una página Básica desde $1.200.000 COP. Incluye 1 página, formulario y diseño responsive, y la recibes en aproximadamente 5 días.'
+      sin: 'Te recomendamos una página Básica desde $1.200.000 COP. Incluye 1 página, formulario y diseño responsive, y la recibes en aproximadamente 5 días.',
+      entrenar: 'Te recomendamos una página Básica desde $1.200.000 COP. Incluye 1 página, formulario y diseño responsive, y la recibes en aproximadamente 5 días.'
     },
     calistenia: {
       principiante: 'Te recomendamos el plan Principiante desde $180.000 COP al mes. Incluye evaluación inicial, plan de fuerza base y ajustes cada 2 semanas.',
@@ -272,11 +272,12 @@
     marketing: {
       nadie: 'Te recomendamos el plan Estándar de marketing desde $900.000 COP al mes. Incluye estrategia de contenido, calendario mensual y campañas para que te encuentren.',
       cierran: 'Te recomendamos el plan Premium de marketing desde $1.500.000 COP al mes. Incluye estrategia completa para convertir mensajes en clientes, y medición mensual.',
-      sin: 'Te recomendamos el plan Básico de marketing desde $450.000 COP al mes. Incluye diagnóstico de tus redes y tu sitio, y campañas básicas para empezar.'
+      sin: 'Te recomendamos el plan Básico de marketing desde $450.000 COP al mes. Incluye diagnóstico de tus redes y tu sitio, y campañas básicas para empezar.',
+      entrenar: 'Te recomendamos el plan Básico de marketing desde $450.000 COP al mes. Incluye diagnóstico de tus redes y tu sitio, y campañas básicas para empezar.'
     }
   };
   const canales = { whatsapp: 'WhatsApp', correo: 'correo', llamada: 'llamada' };
-  const nombreWeb = { nadie: 'una página Estándar', cierran: 'una página Estándar', sin: 'una página Básica' };
+  const nombreWeb = { nadie: 'una página Estándar', cierran: 'una página Estándar', sin: 'una página Básica', entrenar: 'una página Básica' };
   const nombreCalistenia = {
     principiante: 'el plan Principiante de calistenia',
     intermedio: 'el plan Intermedio de calistenia',
@@ -285,7 +286,8 @@
   const nombreMarketing = {
     nadie: 'el plan Estándar de marketing',
     cierran: 'el plan Premium de marketing',
-    sin: 'el plan Básico de marketing'
+    sin: 'el plan Básico de marketing',
+    entrenar: 'el plan Básico de marketing'
   };
 
   function crearParrafo(texto, clase) {
@@ -295,28 +297,33 @@
     return p;
   }
 
-  advisor.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(advisor);
-    const servicios = data.getAll('servicio');
-    const reto = data.get('reto');
-    const nivel = data.get('nivel');
-    const dias = data.get('dias');
-    const canal = data.get('canal');
-
+  function mostrarMensaje(texto) {
     result.innerHTML = '';
+    result.appendChild(crearParrafo(texto));
+  }
 
-    if (servicios.length === 0) {
-      result.appendChild(crearParrafo('Elige al menos un servicio para recomendarte una opción.'));
-      return;
-    }
-    if (servicios.includes('calistenia') && (!nivel || !dias)) {
-      result.appendChild(crearParrafo('Cuéntanos tu nivel y cuántos días puedes entrenar para recomendarte el plan de calistenia.'));
-      return;
-    }
-
+  // Respuesta de la IA, ya validada por el servidor contra el catálogo
+  function mostrarIA(datos, canal, combinacion) {
+    result.innerHTML = '';
     const titulo = document.createElement('h3');
-    titulo.textContent = servicios.length > 1 ? 'Te recomendamos esta combinación' : 'Te recomendamos';
+    titulo.textContent = combinacion ? 'Te recomendamos esta combinación' : 'Te recomendamos';
+    result.appendChild(titulo);
+    result.appendChild(crearParrafo(datos.mensaje));
+    datos.recomendaciones.forEach((r) => {
+      result.appendChild(crearParrafo(r.servicio + ': ' + r.paquete + '. ' + r.motivo));
+    });
+    if (combinacion) {
+      result.appendChild(crearParrafo('Al contratarlos como un solo paquete, recibes un descuento especial del 10%.', 'combo'));
+    }
+    result.appendChild(crearParrafo('Prefieres que te contactemos por ' + canales[canal] + '. Déjanos tus datos en el formulario de contacto.', 'cierre'));
+  }
+
+  // Respuesta con las reglas fijas, por si la IA no está disponible
+  function mostrarReglas(reto, nivel, dias, canal, servicios) {
+    result.innerHTML = '';
+    const titulo = document.createElement('h3');
+    const combinacion = servicios.length > 1;
+    titulo.textContent = combinacion ? 'Te recomendamos esta combinación' : 'Te recomendamos';
     result.appendChild(titulo);
 
     if (servicios.includes('web')) result.appendChild(crearParrafo(textos.web[reto] || textos.web.sin));
@@ -326,7 +333,7 @@
     }
     if (servicios.includes('marketing')) result.appendChild(crearParrafo(textos.marketing[reto] || textos.marketing.sin));
 
-    if (servicios.length > 1) {
+    if (combinacion) {
       const nombres = [];
       if (servicios.includes('web')) nombres.push(nombreWeb[reto] || nombreWeb.sin);
       if (servicios.includes('calistenia')) nombres.push(nombreCalistenia[nivel]);
@@ -337,6 +344,36 @@
       result.appendChild(crearParrafo('Te recomendamos ' + lista + '. Al contratarlos como un solo paquete, recibes un descuento especial del 10%.', 'combo'));
     }
     result.appendChild(crearParrafo('Prefieres que te contactemos por ' + canales[canal] + '. Déjanos tus datos en el formulario de contacto.', 'cierre'));
+  }
+
+  advisor.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(advisor);
+    const servicios = data.getAll('servicio');
+    const reto = data.get('reto');
+    const nivel = data.get('nivel');
+    const dias = data.get('dias');
+    const canal = data.get('canal');
+
+    if (servicios.length === 0) return mostrarMensaje('Elige al menos un servicio para recomendarte una opción.');
+    if (servicios.includes('calistenia') && (!nivel || !dias)) {
+      return mostrarMensaje('Cuéntanos tu nivel y cuántos días puedes entrenar para recomendarte el plan de calistenia.');
+    }
+
+    mostrarMensaje('Estamos preparando tu recomendación...');
+    const combinacion = servicios.length > 1;
+    try {
+      const respuesta = await fetch(API_RECO, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ servicios, reto, nivel, dias, canal })
+      });
+      if (!respuesta.ok) throw new Error('sin IA');
+      const datos = await respuesta.json();
+      mostrarIA(datos, canal, combinacion);
+    } catch (error) {
+      mostrarReglas(reto, nivel, dias, canal, servicios);
+    }
   });
 
   // Formulario de contacto: envía las solicitudes al backend, que las guarda en MongoDB
