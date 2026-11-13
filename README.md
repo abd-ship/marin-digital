@@ -1,6 +1,6 @@
 # Marín Digital
 
-![Estado](https://img.shields.io/badge/estado-en%20desarrollo-yellow)
+![Estado](https://img.shields.io/badge/estado-completo-brightgreen)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
@@ -27,7 +27,7 @@ Sitio web de **Marín Digital**, una oferta de servicios que combina desarrollo 
 
 - **Inicio:** acceso directo a los precios de cada servicio desde sus íconos.
 - **Proceso de trabajo:** cuatro etapas, desde la reunión inicial hasta la entrega y el seguimiento.
-- **Recomendación personalizada:** cuatro preguntas (servicios de interés, reto principal, nivel y días de entrenamiento si aplica, y canal de contacto) que generan una sugerencia de plan.
+- **Recomendación con IA:** el usuario indica lo que necesita, su reto, su nivel y sus días de entrenamiento si aplica, y el asesor virtual sugiere el paquete que mejor encaja. La IA solo puede recomendar paquetes del catálogo real, y si no responde, la página muestra una recomendación de respaldo.
 - **Descuento por combinación:** al contratar dos o más servicios como un solo paquete, se aplica un 10 % de descuento.
 - **Formulario de contacto:** las solicitudes se guardan en una base de datos y quedan disponibles para el administrador.
 - **Panel de administración:** acceso protegido con usuario y contraseña. Permite ver todas las solicitudes y cambiar su estado (nueva, en proceso, cerrada).
@@ -38,17 +38,17 @@ Sitio web de **Marín Digital**, una oferta de servicios que combina desarrollo 
 El proyecto está separado en dos partes:
 
 ```
-Página (GitHub Pages)                 Backend (Render)              Base de datos
-marin-digital                         marin-backend                 MongoDB Atlas
-├── index.html   ── solicitudes ───▶  server.js (Node + Express) ─▶  base "marin"
-├── admin.html   ── panel admin ───▶  /api/admin/...              colección "solicitudes"
-├── styles.css
+Página (GitHub Pages)                 Backend (Render)               Servicios externos
+marin-digital                         marin-backend                  
+├── index.html   ── solicitudes ───▶  server.js (Node + Express) ─▶  MongoDB Atlas (base "marin")
+├── admin.html   ── panel admin ───▶  /api/admin/...               Groq (recomendación con IA)
+├── styles.css   ── recomendación ─▶  /api/recomendacion ─────────▶ 
 └── README.md
 ```
 
 - La **página** es estática y se publica en GitHub Pages.
-- El **backend** recibe las solicitudes y las guarda en MongoDB. También valida el acceso al panel admin.
-- Las contraseñas y la conexión a la base viven solo en las variables de entorno de Render, nunca en el código.
+- El **backend** recibe las solicitudes, las guarda en MongoDB, valida el acceso al panel admin y consulta a la IA.
+- Las contraseñas, la conexión a la base y la clave de la IA viven solo en las variables de entorno de Render, nunca en el código.
 
 Repositorio del backend: [abd-ship/marin-backend](https://github.com/abd-ship/marin-backend)
 
@@ -60,10 +60,11 @@ Repositorio del backend: [abd-ship/marin-backend](https://github.com/abd-ship/ma
 | Estilos | CSS3 | Diseño, tipografía y adaptación a pantallas |
 | Interacción | JavaScript | Recomendación, formulario y panel admin |
 | Tipografía | Google Fonts | Fraunces y Plus Jakarta Sans |
-| Backend | Node.js y Express | API para solicitudes y acceso admin |
+| Backend | Node.js y Express | API para solicitudes, admin e IA |
 | Base de datos | MongoDB Atlas | Almacenamiento de solicitudes |
-| Publicación | GitHub Pages | Hosting de la página |
-| Servidor | Render | Hosting del backend |
+| Inteligencia artificial | Groq | Redacción de la recomendación personalizada |
+| Publicación de la página | GitHub Pages | Hosting del sitio estático |
+| Publicación del backend | Render | Hosting del servidor |
 
 ## Estructura del repositorio
 
@@ -87,12 +88,13 @@ cd marin-backend
 npm install
 ```
 
-Crea un archivo `.env` con estas variables (sin subirlo a GitHub):
+Crea un archivo `.env` con estas variables, sin subirlo a GitHub:
 
 ```
 MONGODB_URI=mongodb+srv://USUARIO:CONTRASEÑA@cluster0.mcvp88z.mongodb.net/
 ADMIN_USER=usuario_admin
 ADMIN_PASSWORD=contraseña_admin
+GROQ_API_KEY=clave_de_groq
 PORT=3000
 ```
 
@@ -104,13 +106,12 @@ Después ejecuta `npm start`.
 |---|---|
 | Inicio y catálogo de servicios con paquetes y precios | ✅ Completo |
 | Proceso de trabajo | ✅ Completo |
-| Recomendación personalizada y descuento por combinación | ✅ Completo |
+| Recomendación personalizada con IA y descuento por combinación | ✅ Completo |
 | Formulario de contacto con guardado en MongoDB | ✅ Completo |
 | Publicación de la página en GitHub Pages | ✅ Completo |
 | Backend con Node.js y Express en Render | ✅ Completo |
 | Panel de administración con login y gestión de estados | ✅ Completo |
-| IA aplicada en la recomendación | 📋 Planeado |
-| Revisión final y preparación de la defensa | 📋 Planeado |
+| Integración de inteligencia artificial | ✅ Completo |
 
 ---
 
