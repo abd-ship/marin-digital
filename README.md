@@ -46,9 +46,6 @@ marin-digital                         marin-backend
 └── README.md
 ```
 
-- La **página** es estática y se publica en GitHub Pages.
-- El **backend** recibe las solicitudes, las guarda en MongoDB, valida el acceso al panel admin y consulta a la IA.
-- Las contraseñas, la conexión a la base y la clave de la IA viven solo en las variables de entorno de Render, nunca en el código.
 
 Repositorio del backend: [abd-ship/marin-backend](https://github.com/abd-ship/marin-backend)
 
