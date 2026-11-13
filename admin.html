@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Panel admin · Marín Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Plus+Jakarta+Sans:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .admin { padding: 48px 0; }
+  .admin h1 { font-family: "Fraunces", Georgia, serif; font-size: 2rem; color: var(--verde-oscuro); margin-bottom: 8px; }
+  .admin .barra { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .login { max-width: 420px; background: var(--blanco); border-radius: var(--radio); padding: 32px; box-shadow: 0 10px 30px rgba(0,0,0,.07); }
+  .login .field { margin-bottom: 16px; }
+  .tabla-wrap { overflow-x: auto; background: var(--blanco); border-radius: var(--radio); box-shadow: 0 10px 30px rgba(0,0,0,.07); }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--crema-2); vertical-align: top; }
+  th { background: var(--crema); color: var(--verde-oscuro); font-weight: 700; white-space: nowrap; }
+  td.mensaje { max-width: 260px; color: var(--gris); }
+  select { font: inherit; padding: 8px 12px; border-radius: 12px; border: 2px solid var(--crema-2); background: var(--blanco); }
+  .vacio { padding: 32px; text-align: center; color: var(--gris); }
+  .error { color: #B00020; font-weight: 700; min-height: 1.5em; }
+  .oculto { display: none !important; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand">Marín <span>Digital</span> · Admin</span>
+  </div>
+</header>
+
+<main class="admin">
+  <div class="wrap">
+
+    <section id="login" class="login">
+      <h1>Entrar</h1>
+      <p style="color:var(--gris);margin-bottom:20px">Acceso solo para el administrador.</p>
+      <form id="formLogin">
+        <div class="field">
+          <label for="usuario">Usuario</label>
+          <input id="usuario" name="usuario" type="text" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="clave">Contraseña</label>
+          <input id="clave" name="clave" type="password" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn solid" id="botonLogin">Entrar</button>
+        <p class="error" id="errorLogin" role="alert"></p>
+      </form>
+    </section>
+
+    <section id="panel" class="oculto">
+      <div class="barra">
+        <div>
+          <h1>Solicitudes</h1>
+          <p style="color:var(--gris)" id="contador"></p>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn" id="botonActualizar" type="button">Actualizar</button>
+          <button class="btn solid" id="botonSalir" type="button">Salir</button>
+        </div>
+      </div>
+      <p class="error" id="errorPanel" role="alert"></p>
+      <div class="tabla-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+              <th>Servicio</th>
+              <th>Mensaje</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoTabla"></tbody>
+        </table>
+        <p class="vacio oculto" id="vacio">Todavía no hay solicitudes.</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+  const API = 'https://marin-backend.onrender.com/api/admin';
+  const ESTADOS = ['nueva', 'en proceso', 'cerrada'];
+
+  const formLogin = document.getElementById('formLogin');
+  const errorLogin = document.getElementById('errorLogin');
+  const botonLogin = document.getElementById('botonLogin');
+  const panel = document.getElementById('panel');
+  const login = document.getElementById('login');
+  const cuerpoTabla = document.getElementById('cuerpoTabla');
+  const vacio = document.getElementById('vacio');
+  const contador = document.getElementById('contador');
+  const errorPanel = document.getElementById('errorPanel');
+
+  // El token se guarda solo en esta pestaña; al cerrarla, hay que volver a entrar
+  const obtenerToken = () => sessionStorage.getItem('adminToken');
+
+  function mostrarPanel() {
+    login.classList.add('oculto');
+    panel.classList.remove('oculto');
+    cargarSolicitudes();
+  }
+
+  function mostrarLogin() {
+    panel.classList.add('oculto');
+    login.classList.remove('oculto');
+  }
+
+  function formatearFecha(valor) {
+    return new Date(valor).toLocaleString('es-CO', { dateStyle: 'short', timeStyle: 'short' });
+  }
+
+  function crearCelda(texto, clase) {
+    const td = document.createElement('td');
+    td.textContent = texto;
+    if (clase) td.className = clase;
+    return td;
+  }
+
+  function crearFila(s) {
+    const tr = document.createElement('tr');
+    tr.appendChild(crearCelda(formatearFecha(s.creada)));
+    tr.appendChild(crearCelda(s.nombre));
+    tr.appendChild(crearCelda(s.correo));
+    tr.appendChild(crearCelda(s.telefono));
+    tr.appendChild(crearCelda(s.servicio));
+    tr.appendChild(crearCelda(s.mensaje || '—', 'mensaje'));
+
+    const tdEstado = document.createElement('td');
+    const select = document.createElement('select');
+    ESTADOS.forEach((estado) => {
+      const opcion = document.createElement('option');
+      opcion.value = estado;
+      opcion.textContent = estado;
+      if (estado === s.estado) opcion.selected = true;
+      select.appendChild(opcion);
+    });
+    select.addEventListener('change', () => cambiarEstado(s._id, select.value, select));
+    tdEstado.appendChild(select);
+    tr.appendChild(tdEstado);
+    return tr;
+  }
+
+  async function cargarSolicitudes() {
+    errorPanel.textContent = '';
+    try {
+      const respuesta = await fetch(API + '/solicitudes', {
+        headers: { Authorization: 'Bearer ' + obtenerToken() }
+      });
+      if (respuesta.status === 401) {
+        sessionStorage.removeItem('adminToken');
+        mostrarLogin();
+        errorLogin.textContent = 'Tu sesión venció. Vuelve a entrar.';
+        return;
+      }
+      const lista = await respuesta.json();
+      cuerpoTabla.innerHTML = '';
+      lista.forEach((s) => cuerpoTabla.appendChild(crearFila(s)));
+      vacio.classList.toggle('oculto', lista.length > 0);
+      contador.textContent = lista.length + (lista.length === 1 ? ' solicitud' : ' solicitudes');
+    } catch (error) {
+      errorPanel.textContent = 'No pudimos cargar las solicitudes. Revisa tu conexión.';
+    }
+  }
+
+  async function cambiarEstado(id, estado, select) {
+    errorPanel.textContent = '';
+    try {
+      const respuesta = await fetch(API + '/solicitudes/' + id, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + obtenerToken()
+        },
+        body: JSON.stringify({ estado })
+      });
+      if (!respuesta.ok) throw new Error('no guardó');
+    } catch (error) {
+      errorPanel.textContent = 'No se pudo cambiar el estado. Intenta de nuevo.';
+      select.value = select.dataset.anterior || select.value;
+    }
+  }
+
+  formLogin.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorLogin.textContent = '';
+    botonLogin.disabled = true;
+    try {
+      const respuesta = await fetch(API + '/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          usuario: document.getElementById('usuario').value,
+          clave: document.getElementById('clave').value
+        })
+      });
+      if (!respuesta.ok) {
+        errorLogin.textContent = 'Usuario o contraseña incorrectos.';
+        return;
+      }
+      const { token } = await respuesta.json();
+      sessionStorage.setItem('adminToken', token);
+      formLogin.reset();
+      mostrarPanel();
+    } catch (error) {
+      errorLogin.textContent = 'No pudimos conectar con el servidor. Intenta de nuevo.';
+    } finally {
+      botonLogin.disabled = false;
+    }
+  });
+
+  document.getElementById('botonActualizar').addEventListener('click', cargarSolicitudes);
+  document.getElementById('botonSalir').addEventListener('click', () => {
+    sessionStorage.removeItem('adminToken');
+    mostrarLogin();
+  });
+
+  if (obtenerToken()) mostrarPanel();
+</script>
+</body>
+</html>
