@@ -7,9 +7,9 @@
 ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
 
-Sitio web de **Marín Digital**, una oferta de servicios que combina desarrollo de páginas web, asesoría personalizada de calistenia y street workout, y marketing digital.
+Este es mi proyecto llamado: **Marín Digital**, ofrezco diferentes servicios en dónde combino desarrollo de páginas web, asesoría personalizada de calistenia y street workout, y marketing digital.
 
-🔗 **Sitio en producción:** [abd-ship.github.io/marin-digital](https://abd-ship.github.io/marin-digital/)
+🔗 **Proyecto:** [abd-ship.github.io/marin-digital](https://abd-ship.github.io/marin-digital/)
 
 🔐 **Panel de administración:** [abd-ship.github.io/marin-digital/admin.html](https://abd-ship.github.io/marin-digital/admin.html)
 
