@@ -76,45 +76,6 @@ marin-digital/
 └── README.md     Documentación del proyecto
 ```
 
-## Ejecución local
-
-**Página:** abre `index.html` en tu navegador. Para que el formulario guarde solicitudes en tu computadora, el backend debe estar corriendo en `localhost:3000`.
-
-**Backend:**
-
-```bash
-git clone https://github.com/abd-ship/marin-backend.git
-cd marin-backend
-npm install
-```
-
-Crea un archivo `.env` con estas variables, sin subirlo a GitHub:
-
-```
-MONGODB_URI=mongodb+srv://USUARIO:CONTRASEÑA@cluster0.mcvp88z.mongodb.net/
-ADMIN_USER=usuario_admin
-ADMIN_PASSWORD=contraseña_admin
-GROQ_API_KEY=clave_de_groq
-PORT=3000
-```
-
-Después ejecuta `npm start`.
-
-## Estado del proyecto
-
-| Módulo | Estado |
-|---|---|
-| Inicio y catálogo de servicios con paquetes y precios | ✅ Completo |
-| Proceso de trabajo | ✅ Completo |
-| Recomendación personalizada con IA y descuento por combinación | ✅ Completo |
-| Formulario de contacto con guardado en MongoDB | ✅ Completo |
-| Publicación de la página en GitHub Pages | ✅ Completo |
-| Backend con Node.js y Express en Render | ✅ Completo |
-| Panel de administración con login y gestión de estados | ✅ Completo |
-| Integración de inteligencia artificial | ✅ Completo |
-
----
-
 ## Autor
 
 **Carlos Marín**
