@@ -282,3 +282,8 @@ section[id], article[id] { scroll-margin-top: 90px; }
 .icono-canal { width: 20px; height: 20px; vertical-align: middle; margin-right: 6px; }
 
 .icono-reto { width: 32px; height: 32px; color: var(--tinta); margin-bottom: 6px; display: block; }
+
+.process .icono-paso { color: #E8E6E0; }
+
+.icono-reto, .icono-canal { color: inherit; }
+.icono-campo { width: 18px; height: 18px; vertical-align: -3px; margin-right: 6px; color: var(--tinta); }
